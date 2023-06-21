@@ -1,14 +1,15 @@
+ # Replace with your actual signing_secret
 from flask import Flask, request, jsonify
+from slack_sdk import WebClient
 from slackeventsapi import SlackEventAdapter
-from slack import WebClient
-import os
 import openai
 
 # Initialize a Flask application
 app = Flask(__name__)
+slack_bot_token = "9X5tOX2GodKXch9bPNSbPR3h"  # Replace with your actual bot token
 
 signing_secret = "aea91a61cb57d809f34f6dde29ac2910"  # Replace with your actual signing_secret
-slack_bot_token = "9X5tOX2GodKXch9bPNSbPR3h"  # Replace with your actual bot token
+slack_bot_token = "your-slack-bot-token"  # Replace with your actual bot token
 
 slack_events_adapter = SlackEventAdapter(signing_secret, "/slack/events", app)
 slack_web_client = WebClient(token=slack_bot_token)
@@ -45,7 +46,3 @@ def call_gpt_3_api(prompt):
     except Exception as e:
         # If there was an error, return a message indicating the problem
         return f"Error: {str(e)}"
-
-# Start the server
-if __name__ == "__main__":
-    app.run(port=3000)
